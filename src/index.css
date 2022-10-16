@@ -1,13 +1,45 @@
-body {
+* {
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+main {
+  display: flex;
+  min-height: 100vh;
+  background-color: darkslategray;
+  color: white;
+  font-size: calc(10px + 2vmin);
+}
+.drag-and-drop {
+  width: 100%;
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  padding: 0.5rem;
+  gap: 1rem;
+  align-items: start;
+}
+.dnd-group {
+  background-color: rgb(70, 92, 92);
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+.group-title {
+  text-align: left;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.dnd-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: darkslategray;
+  min-height: 150px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 1.2rem;
+}
+.dnd-item:not(:last-of-type) {
+  margin-bottom: 0.5rem;
 }

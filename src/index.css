@@ -8,6 +8,7 @@ main {
   background-color: darkslategray;
   color: white;
   font-size: calc(10px + 2vmin);
+  margin: 0 auto;
 }
 .drag-and-drop {
   width: 100%;
@@ -40,6 +41,11 @@ main {
   background-color: white;
   font-size: 1.2rem;
 }
+
 .dnd-item:not(:last-of-type) {
   margin-bottom: 0.5rem;
+}
+
+.current {
+  background-color: darkslategray;
 }

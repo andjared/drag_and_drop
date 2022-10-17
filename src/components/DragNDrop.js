@@ -7,11 +7,9 @@ export default function DragNDrop({ data }) {
   const dragNode = useRef();
 
   const handleDragStart = (e, params) => {
-    console.log("drag start", params);
     dragItem.current = params;
     dragNode.current = e.target;
     dragNode.current.addEventListener("dragend", handleDragEnd);
-    console.log(dragItem, dragNode);
     //change background asynchronously
     setTimeout(() => {
       setIsDragging(true);
@@ -20,16 +18,20 @@ export default function DragNDrop({ data }) {
 
   const handleDragEnd = () => {
     dragNode.current.removeEventListener("dragend", handleDragEnd);
-
     dragItem.current = null;
     dragNode.current = null;
     setIsDragging(false);
   };
 
-  const styleDraggedItem = (groupIndex, itemIndex) => {
+  const handleDragEnter = (e, params) => {
+    console.log("entering... ", params);
+  };
+
+  const styleDraggedItem = (params) => {
+    const currentItem = dragItem.current;
     if (
-      dragItem.current.groupIndex === groupIndex &&
-      dragItem.current.itemIndex === itemIndex
+      currentItem.groupIndex === params.groupIndex &&
+      currentItem.itemIndex === params.itemIndex
     ) {
       return "current dnd-item";
     }
@@ -48,12 +50,17 @@ export default function DragNDrop({ data }) {
                   key={itemIndex}
                   className={
                     isDragging
-                      ? styleDraggedItem(groupIndex, itemIndex)
+                      ? styleDraggedItem({ groupIndex, itemIndex })
                       : "dnd-item"
                   }
                   draggable
                   onDragStart={(e) =>
                     handleDragStart(e, { groupIndex, itemIndex })
+                  }
+                  onDragEnter={
+                    isDragging
+                      ? (e) => handleDragEnter(e, { groupIndex, itemIndex })
+                      : null
                   }
                 >
                   {item}

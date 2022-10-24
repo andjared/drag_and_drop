@@ -9,6 +9,8 @@ export default function DragNDrop({ data }) {
   const handleDragStart = (e, params) => {
     dragItem.current = params;
     dragNode.current = e.target;
+    console.log(dragItem.current, "item");
+    console.log(dragNode.current, "node");
     dragNode.current.addEventListener("dragend", handleDragEnd);
     //change background asynchronously
     setTimeout(() => {
@@ -24,7 +26,25 @@ export default function DragNDrop({ data }) {
   };
 
   const handleDragEnter = (e, params) => {
-    console.log("entering... ", params);
+    if (e.target !== dragNode.current) {
+      const currentItem = dragItem.current;
+
+      setList((oldList) => {
+        let newList = JSON.parse(JSON.stringify(oldList));
+        let itemToBeReplaced = params.itemIndex;
+        let itemToReplacedWith = currentItem.itemIndex;
+        //first get the item that is target (not that is dragging)
+        //splice params: first is what we want to replace, second how many to delete, and last is with what are we replacing
+        newList[params.groupIndex].items.splice(
+          itemToBeReplaced,
+          0,
+          newList[currentItem.groupIndex].items.splice(itemToReplacedWith, 1)[0]
+        );
+        //current item became target item, so we need to set it back to params
+        dragItem.current = params;
+        return newList;
+      });
+    }
   };
 
   const styleDraggedItem = (params) => {
